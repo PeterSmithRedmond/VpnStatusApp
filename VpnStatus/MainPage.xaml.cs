@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -24,6 +25,7 @@ namespace VpnStatus
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        public ObservableCollection<IVpnProfile> Profiles { get; } = new ObservableCollection<IVpnProfile>();
         public MainPage()
         {
             this.InitializeComponent();
@@ -36,11 +38,14 @@ namespace VpnStatus
         VpnManagementAgent Agent = null; 
         private async void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
+            this.DataContext = this;
+
             Agent = new VpnManagementAgent();
             var profiles = await Agent.GetProfilesAsync();
             foreach (var profile in profiles)
             {
                 Log($"PROFILE: {profile.ProfileName}");
+                Profiles.Add(profile);
                 VpnNativeProfile nativeProfile = profile as VpnNativeProfile;
                 VpnPlugInProfile pluginProfile = profile as VpnPlugInProfile;
                 if (nativeProfile != null)

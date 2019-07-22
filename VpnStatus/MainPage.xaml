@@ -9,12 +9,23 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <StackPanel>
-            <TextBlock FontSize="32">VPN CPNNECTION</TextBlock>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="600" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" FontSize="32">VPN CPNNECTION</TextBlock>
+        <ListView Header="Profiles"  Grid.Row="1" ItemsSource="{Binding Profiles}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <local:ProfileControl />
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <StackPanel Grid.Row="2">
             <TextBlock x:Name="uiStatus" IsTextSelectionEnabled="True" TextWrapping="Wrap">
                 VPN Management Status
             </TextBlock>
         </StackPanel>
-
     </Grid>
 </Page>
