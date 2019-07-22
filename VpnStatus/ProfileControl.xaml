@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     d:DesignHeight="100"
-    d:DesignWidth="600">
+    d:DesignWidth="600" Margin="0,5,0,0">
     <UserControl.Resources>
         <ResourceDictionary>
             <Style x:Key="AnnunciatorStyle" TargetType="TextBlock">
@@ -18,22 +18,36 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="auto" MinWidth="90" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         
         <!-- Status annunciator area -->
         <Grid Grid.Column="0">
-            <TextBlock Style="{StaticResource AnnunciatorStyle}" Text="??" x:Name="uiStatus" />
+            <TextBlock Style="{StaticResource AnnunciatorStyle}" Text="?" x:Name="uiStatus" />
         </Grid>
-        
-        
-        <StackPanel Grid.Column="1">
-            <TextBlock>
-                <Run>PROFILE</Run>
+
+        <Grid Grid.Column="1" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" FontSize="18" FontWeight="Bold">
+                <Run>PROFILE NAME: </Run>
                 <Run x:Name="uiName" />
             </TextBlock>
-        </StackPanel>
 
+            <TextBlock Grid.Row="1">
+                <Run>PROFILE TYPE: </Run>
+                <Run x:Name="uiType">((type))</Run>
+            </TextBlock>
+            
+            <TextBlock Grid.Row="2">
+                <Run>Package Name: </Run>
+                <Run x:Name="uiPackage">((package))</Run>
+            </TextBlock>
+        </Grid>
     </Grid>
 </UserControl>
