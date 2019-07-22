@@ -46,24 +46,6 @@ namespace VpnStatus
             {
                 Log($"PROFILE: {profile.ProfileName}");
                 Profiles.Add(profile);
-                VpnNativeProfile nativeProfile = profile as VpnNativeProfile;
-                VpnPlugInProfile pluginProfile = profile as VpnPlugInProfile;
-                if (nativeProfile != null)
-                {
-                    Log($"{nativeProfile.ConnectionStatus}");
-                }
-                if (pluginProfile != null)
-                {
-                    try
-                    {
-                        Log($"{pluginProfile.ConnectionStatus}");
-                    }
-                    catch (Exception ex)
-                    {
-                        Log($"ERROR: can't get connection status {ex.Message} :-(");
-                    }
-                }
-
             }
         }
     }

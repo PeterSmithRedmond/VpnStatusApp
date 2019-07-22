@@ -6,11 +6,29 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    d:DesignHeight="300"
-    d:DesignWidth="400">
+    d:DesignHeight="100"
+    d:DesignWidth="600">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <Style x:Key="AnnunciatorStyle" TargetType="TextBlock">
+                <Setter Property="FontSize" Value="42" />
+            </Style>
+        </ResourceDictionary>
+    </UserControl.Resources>
 
     <Grid>
-        <StackPanel>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        
+        <!-- Status annunciator area -->
+        <Grid Grid.Column="0">
+            <TextBlock Style="{StaticResource AnnunciatorStyle}" Text="??" x:Name="uiStatus" />
+        </Grid>
+        
+        
+        <StackPanel Grid.Column="1">
             <TextBlock>
                 <Run>PROFILE</Run>
                 <Run x:Name="uiName" />
