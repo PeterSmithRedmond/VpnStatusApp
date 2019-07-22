@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Networking.Vpn;
@@ -39,7 +40,17 @@ namespace VpnStatus
         private async void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
             this.DataContext = this;
+            await LoadVpn();
+        }
 
+        private async void OnRetry(object sender, RoutedEventArgs e)
+        {
+            await LoadVpn();
+        }
+
+        private async Task LoadVpn()
+        {
+            Profiles.Clear();
             Agent = new VpnManagementAgent();
             var profiles = await Agent.GetProfilesAsync();
             foreach (var profile in profiles)
@@ -47,6 +58,7 @@ namespace VpnStatus
                 Log($"PROFILE: {profile.ProfileName}");
                 Profiles.Add(profile);
             }
+
         }
     }
 }
