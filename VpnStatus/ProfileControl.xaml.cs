@@ -78,15 +78,16 @@ namespace VpnStatus
         //Connecting = 3
         string[] StatusIcons = new string[]
         {
-            "DIS",
-            "ding",
-            "CON",
-            "cing",
+            "🗷",
+            "🗴",
+            "✔",
+            "🗲",
         };
 
         private void SetupNativeProfile(VpnNativeProfile profile)
         {
             if (profile == null) return;
+            uiType.Text = "Native";
             try
             {
                 var connectionStatus = profile.ConnectionStatus;
@@ -101,14 +102,18 @@ namespace VpnStatus
         private void SetupPluginProfile(VpnPlugInProfile profile)
         {
             if (profile == null) return;
+            uiType.Text = "Plugin";
+
             try
             {
                 var connectionStatus = profile.ConnectionStatus;
                 uiStatus.Text = StatusIcons[(int)connectionStatus];
-                Log($"{profile.ConnectionStatus}");
+
+                uiPackage.Text = profile.VpnPluginPackageFamilyName;
             }
             catch (Exception ex)
             {
+                uiStatus.Text = "!!";
                 Log($"ERROR: can't get connection status {ex.Message} :-(");
             }
         }

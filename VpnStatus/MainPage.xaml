@@ -11,10 +11,11 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
-            <RowDefinition Height="600" />
+            <RowDefinition Height="400" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" FontSize="32">VPN Connection</TextBlock>
+        <TextBlock Grid.Row="0" FontSize="32">VPN CPNNECTION</TextBlock>
         <ListView Header="Profiles"  Grid.Row="1" ItemsSource="{Binding Profiles}">
             <ListView.ItemTemplate>
                 <DataTemplate>
@@ -26,6 +27,9 @@
             <TextBlock x:Name="uiStatus" IsTextSelectionEnabled="True" TextWrapping="Wrap">
                 VPN Management Status
             </TextBlock>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Grid.Row="3">
+            <Button Content="Retry" Click="OnRetry" />
         </StackPanel>
     </Grid>
 </Page>
