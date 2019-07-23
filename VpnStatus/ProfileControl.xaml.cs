@@ -35,7 +35,7 @@ namespace VpnStatus
         private void ProfileControl_Loaded(object sender, RoutedEventArgs e)
         {
             Profile = this.DataContext as IVpnProfile;
-            uiAuto.Checked += UiAuto_CheckedAsync;
+            var pp = Profile as VpnPlugInProfile;
 
             uiName.Text = Profile.ProfileName;
             uiAuto.IsChecked = Profile.AlwaysOn;
@@ -44,20 +44,6 @@ namespace VpnStatus
             SetupPluginProfile(Profile as VpnPlugInProfile);
         }
 
-        private void UiAuto_CheckedAsync(object sender, RoutedEventArgs e)
-        {
-            CheckBox checkBox = sender as CheckBox;
-            if (checkBox.IsChecked.HasValue)
-            {
-                Profile.AlwaysOn = checkBox.IsChecked.Value;
-                VpnManagementAgent vpnManagementAgent = new VpnManagementAgent();
-                Task<VpnManagementErrorStatus> task = vpnManagementAgent.UpdateProfileFromObjectAsync(Profile).AsTask<VpnManagementErrorStatus>();
-                task.Wait();
-                Log($"{task.IsCompleted}");
-                VpnManagementErrorStatus errorStatus = task.Result;
-                Log($"{Enum.GetName(typeof(VpnManagementErrorStatus), errorStatus)}");
-            }
-        }
 
         //
         //
@@ -116,6 +102,27 @@ namespace VpnStatus
                 uiStatus.Text = "!!";
                 Log($"ERROR: can't get connection status {ex.Message} :-(");
             }
+        }
+
+        private async void OnAutoCheck(object sender, RoutedEventArgs e)
+        {
+            CheckBox checkBox = sender as CheckBox;
+            if (checkBox.IsChecked.HasValue)
+            {
+                if (Profile.AlwaysOn == checkBox.IsChecked.Value)
+                {
+                    // It's already the right way around; ust return.
+                    return;
+                }
+                Profile.AlwaysOn = checkBox.IsChecked.Value;
+                VpnManagementAgent vpnManagementAgent = new VpnManagementAgent();
+                var result = await vpnManagementAgent.UpdateProfileFromObjectAsync(Profile);
+               
+                 VpnManagementErrorStatus errorStatus = result;
+                var f = string.Format("{0} / {1}", errorStatus, errorStatus.ToString());
+                Log($"{errorStatus}");
+            }
+
         }
     }
 }

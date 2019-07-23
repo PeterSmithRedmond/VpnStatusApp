@@ -32,6 +32,7 @@
                 <RowDefinition Height="auto" />
                 <RowDefinition Height="auto" />
                 <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
             </Grid.RowDefinitions>
 
             <TextBlock Grid.Row="0" FontSize="18" FontWeight="Bold">
@@ -39,17 +40,17 @@
                 <Run x:Name="uiName" />
             </TextBlock>
 
-            <TextBlock Grid.Row="1">
+            <TextBlock Grid.Row="2">
                 <Run>PROFILE TYPE: </Run>
                 <Run x:Name="uiType">((type))</Run>
             </TextBlock>
 
-            <TextBlock Grid.Row="2">
+            <TextBlock Grid.Row="3">
                 <Run>Package Name: </Run>
                 <Run x:Name="uiPackage">((package))</Run>
             </TextBlock>
 
-            <CheckBox x:Name="uiAuto" Content="Connect Automatically" HorizontalAlignment="Left" Margin="0,30,0,0" VerticalAlignment="Top">
+            <CheckBox Grid.Row="1" x:Name="uiAuto" Content="Connect Automatically" Unchecked="OnAutoCheck" Checked="OnAutoCheck">
             </CheckBox>
 
         </Grid>
