@@ -26,14 +26,32 @@
         <Grid Grid.Column="0">
             <TextBlock Style="{StaticResource AnnunciatorStyle}" Text="?" x:Name="uiStatus" />
         </Grid>
-        
-        
-        <StackPanel Grid.Column="1">
-            <TextBlock>
-                <Run>PROFILE</Run>
+
+        <Grid Grid.Column="1" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" FontSize="18" FontWeight="Bold">
+                <Run>PROFILE NAME: </Run>
                 <Run x:Name="uiName" />
             </TextBlock>
-        </StackPanel>
 
+            <TextBlock Grid.Row="1">
+                <Run>PROFILE TYPE: </Run>
+                <Run x:Name="uiType">((type))</Run>
+            </TextBlock>
+
+            <TextBlock Grid.Row="2">
+                <Run>Package Name: </Run>
+                <Run x:Name="uiPackage">((package))</Run>
+            </TextBlock>
+
+            <CheckBox x:Name="uiAuto" Content="Connect Automatically" HorizontalAlignment="Left" Margin="0,30,0,0" VerticalAlignment="Top">
+            </CheckBox>
+
+        </Grid>
     </Grid>
 </UserControl>
