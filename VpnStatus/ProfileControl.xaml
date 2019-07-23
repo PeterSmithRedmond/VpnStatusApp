@@ -21,7 +21,7 @@
             <ColumnDefinition Width="auto" MinWidth="90" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        
+
         <!-- Status annunciator area -->
         <Grid Grid.Column="0">
             <TextBlock Style="{StaticResource AnnunciatorStyle}" Text="?" x:Name="uiStatus" />
@@ -43,11 +43,15 @@
                 <Run>PROFILE TYPE: </Run>
                 <Run x:Name="uiType">((type))</Run>
             </TextBlock>
-            
+
             <TextBlock Grid.Row="2">
                 <Run>Package Name: </Run>
                 <Run x:Name="uiPackage">((package))</Run>
             </TextBlock>
+
+            <CheckBox x:Name="uiAuto" Content="Connect Automatically" HorizontalAlignment="Left" Margin="0,30,0,0" VerticalAlignment="Top">
+            </CheckBox>
+
         </Grid>
     </Grid>
 </UserControl>
