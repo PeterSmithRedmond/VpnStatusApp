@@ -14,7 +14,7 @@
             <RowDefinition Height="600" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" FontSize="32">VPN CPNNECTION</TextBlock>
+        <TextBlock Grid.Row="0" FontSize="32">VPN Connection</TextBlock>
         <ListView Header="Profiles"  Grid.Row="1" ItemsSource="{Binding Profiles}">
             <ListView.ItemTemplate>
                 <DataTemplate>

@@ -21,13 +21,12 @@
             <ColumnDefinition Width="auto" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        
+
         <!-- Status annunciator area -->
         <Grid Grid.Column="0">
             <TextBlock Style="{StaticResource AnnunciatorStyle}" Text="??" x:Name="uiStatus" />
         </Grid>
-        
-        
+
         <StackPanel Grid.Column="1">
             <TextBlock>
                 <Run>PROFILE</Run>
@@ -35,5 +34,7 @@
             </TextBlock>
         </StackPanel>
 
+        <CheckBox x:Name="uiAuto" Content="Connect Automatically" Grid.Column="1" HorizontalAlignment="Left" Margin="0,30,0,0" VerticalAlignment="Top">
+        </CheckBox>
     </Grid>
 </UserControl>

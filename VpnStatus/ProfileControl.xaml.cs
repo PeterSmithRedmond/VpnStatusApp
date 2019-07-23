@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Networking.Vpn;
@@ -34,12 +35,30 @@ namespace VpnStatus
         private void ProfileControl_Loaded(object sender, RoutedEventArgs e)
         {
             Profile = this.DataContext as IVpnProfile;
+            uiAuto.Checked += UiAuto_CheckedAsync;
 
             uiName.Text = Profile.ProfileName;
+            uiAuto.IsChecked = Profile.AlwaysOn;
 
             SetupNativeProfile(Profile as VpnNativeProfile);
             SetupPluginProfile(Profile as VpnPlugInProfile);
         }
+
+        private void UiAuto_CheckedAsync(object sender, RoutedEventArgs e)
+        {
+            CheckBox checkBox = sender as CheckBox;
+            if (checkBox.IsChecked.HasValue)
+            {
+                Profile.AlwaysOn = checkBox.IsChecked.Value;
+                VpnManagementAgent vpnManagementAgent = new VpnManagementAgent();
+                Task<VpnManagementErrorStatus> task = vpnManagementAgent.UpdateProfileFromObjectAsync(Profile).AsTask<VpnManagementErrorStatus>();
+                task.Wait();
+                Log($"{task.IsCompleted}");
+                VpnManagementErrorStatus errorStatus = task.Result;
+                Log($"{Enum.GetName(typeof(VpnManagementErrorStatus), errorStatus)}");
+            }
+        }
+
         //
         //
         // Summary:
@@ -79,7 +98,7 @@ namespace VpnStatus
                 Log($"ERROR: can't get connection status {ex.Message} :-(");
             }
         }
-        private void SetupPluginProfile (VpnPlugInProfile profile)
+        private void SetupPluginProfile(VpnPlugInProfile profile)
         {
             if (profile == null) return;
             try
