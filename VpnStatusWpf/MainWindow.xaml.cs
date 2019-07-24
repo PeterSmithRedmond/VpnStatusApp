@@ -42,19 +42,22 @@ namespace VpnStatusWpf
             try
             {
                 var rasConnections = RASMAN.RASMAN.RasEnumConnections();
+                Log("CONNECTIONS");
                 for (int i = 0; i < rasConnections.Length; i++)
                 {
                     var item = rasConnections[i];
                     Log($"{item.EntryName}\t{item.PhoneBook}\t{item.DeviceType}\t{item.DeviceName}");
                 }
+                Log("\n\n");
 
                 var rasEntries = RASMAN.RASMAN.RasEnumEntries();
-
+                Log("ENTRIES");
                 for (int i = 0; i < rasEntries.Length; i++)
                 {
                     var item = rasEntries[i];
                     Log($"{item.EntryName}\t{item.PhoneBookPath}");
                 }
+                Log("\n\n");
             }
             catch (Exception ex)
             {
