@@ -39,12 +39,26 @@ namespace VpnStatusWpf
         {
             uiStatus.Text = "Starting P/INVOKE!";
 
-            var rasEntries = RASMAN.RASMAN.RasEnumEntries();
-
-            for (int i=0; i<rasEntries.Length; i++)
+            try
             {
-                var entry = rasEntries[i];
-                Log($"{entry.EntryName}\t{entry.PhoneBookPath}");
+                var rasConnections = RASMAN.RASMAN.RasEnumConnections();
+                for (int i = 0; i < rasConnections.Length; i++)
+                {
+                    var item = rasConnections[i];
+                    Log($"{item.EntryName}\t{item.PhoneBook}\t{item.DeviceType}\t{item.DeviceName}");
+                }
+
+                var rasEntries = RASMAN.RASMAN.RasEnumEntries();
+
+                for (int i = 0; i < rasEntries.Length; i++)
+                {
+                    var item = rasEntries[i];
+                    Log($"{item.EntryName}\t{item.PhoneBookPath}");
+                }
+            }
+            catch (Exception ex)
+            {
+                Log(ex.Message);
             }
 
             Log("DONE");
