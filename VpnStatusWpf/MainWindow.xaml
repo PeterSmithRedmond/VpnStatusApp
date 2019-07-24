@@ -11,5 +11,6 @@
             <TextBlock x:Name="uiStatus" TextWrapping="Wrap" />
         </ScrollViewer>
 
+        <ListView Name="lvProfiles" />
     </Grid>
 </Window>

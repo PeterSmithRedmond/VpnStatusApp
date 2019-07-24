@@ -43,6 +43,7 @@ namespace VpnStatusWpf
             {
                 var rasConnections = RASMAN.RASMAN.RasEnumConnections();
                 Log("CONNECTIONS");
+                List<string> profiles = new List<string>();
                 for (int i = 0; i < rasConnections.Length; i++)
                 {
                     var item = rasConnections[i];
@@ -57,16 +58,15 @@ namespace VpnStatusWpf
                     Log($"    Duration: {stats.ConnectDuration}");
                     Log($"    BPS: {stats.Bps}");
                 }
-                Log("\n\n");
 
                 var rasEntries = RASMAN.RASMAN.RasEnumEntries();
                 Log("ENTRIES");
                 for (int i = 0; i < rasEntries.Length; i++)
                 {
                     var item = rasEntries[i];
-                    Log($"{item.EntryName}\t{item.PhoneBookPath}");
+                    profiles.Add($"{item.EntryName}\t{item.PhoneBookPath}");
                 }
-                Log("\n\n");
+                lvProfiles.ItemsSource = profiles;
             }
             catch (Exception ex)
             {
