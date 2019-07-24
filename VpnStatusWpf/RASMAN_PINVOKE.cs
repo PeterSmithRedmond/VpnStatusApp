@@ -48,7 +48,7 @@ namespace RASMAN
     {
         public void Init()
         {
-            Size = (UInt32)Marshal.SizeOf(typeof(RASENTRYNAMEW));
+            Size = (UInt32)Marshal.SizeOf(this.GetType());
             dwFlags = 0;
         }
         public UInt32 Size;
@@ -60,6 +60,35 @@ namespace RASMAN
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = RASMAN.MAX_PATH + 1)]
         public string PhoneBookPath;
     }
+
+    /// <summary>
+    /// https://docs.microsoft.com/en-us/windows/win32/api/ras/nf-ras-rasenumentriesw
+    /// </summary>
+    [StructLayout(LayoutKind.Sequential, Pack = 4, CharSet = CharSet.Unicode)]
+    public unsafe struct _RAS_STATS
+    {
+        public void Init()
+        {
+            Size = (UInt32)Marshal.SizeOf(this.GetType());
+        }
+        public UInt32 Size;
+        public UInt32 BytesXmited;
+        public UInt32 BytesRcved;
+        public UInt32 FramesXmited;
+        public UInt32 FramesRcved;
+        public UInt32 CrcErr;
+        public UInt32 TimeoutErr;
+        public UInt32 AlignmentErr;
+        public UInt32 HardwareOverrunErr;
+        public UInt32 FramingErr;
+        public UInt32 BufferOverrunErr;
+        public UInt32 CompressionRatioIn;
+        public UInt32 CompressionRatioOut;
+        public UInt32 Bps;
+        public UInt32 ConnectDuration;
+    }
+
+
     /// <summary>
     /// RASMAN API entries for P/Invoke; includes a number of common constants.
     /// </summary>
@@ -121,6 +150,11 @@ namespace RASMAN
             if (status != 0) throw new Exception($"ERROR: {System.Reflection.MethodBase.GetCurrentMethod().Name} status {status}");
             return rasArray;
         }
+
+
+        [DllImport("RasAPI32.dll", CharSet = CharSet.Unicode)]
+        public static extern UInt32 RasGetConnectionStatistics(IntPtr hrasconn, out _RAS_STATS stats);
+
     };
 
     /// <summary>

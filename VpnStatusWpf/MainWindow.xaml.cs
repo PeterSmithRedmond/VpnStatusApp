@@ -47,6 +47,15 @@ namespace VpnStatusWpf
                 {
                     var item = rasConnections[i];
                     Log($"{item.EntryName}\t{item.PhoneBook}\t{item.DeviceType}\t{item.DeviceName}");
+
+                    // Get the connection stats
+                    _RAS_STATS stats = new _RAS_STATS();
+                    stats.Init();
+                    UInt32 status = RASMAN.RASMAN.RasGetConnectionStatistics(item.hrasconn, out stats);
+                    Log($"    Recv: {stats.BytesRcved}bytes = {stats.BytesRcved/1024}k = {stats.BytesRcved / (1024*1204)}m");
+                    Log($"    Xmit: {stats.BytesXmited}");
+                    Log($"    Duration: {stats.ConnectDuration}");
+                    Log($"    BPS: {stats.Bps}");
                 }
                 Log("\n\n");
 
